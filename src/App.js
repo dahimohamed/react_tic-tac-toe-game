@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Board } from "./components/Board";
 
-
-
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
@@ -44,4 +42,3 @@ export default function Game() {
     </div>
   );
 }
-
