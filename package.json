@@ -4,15 +4,22 @@
     "react-dom": "^18.0.0",
     "react-scripts": "^4.0.0"
   },
-  "main": "/index.js",
+  "main": "/index.tsx",
   "devDependencies": {
+    "@mate-academy/eslint-config": "0.0.22",
+    "@types/node": "^18.15.11",
+    "@types/react": "^18.0.31",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
     "gh-pages": "^5.0.0",
-    "react-scripts": "1.0.0"
+    "react-scripts": "1.0.0",
+    "typescript": "^5.0.2"
   },
   "name": "react_tic-tac-toe-game",
   "homepage": "https://<dahimohamed>.github.io/react_tic-tac-toe-game",
   "version": "0.0.0",
   "scripts": {
+    "eslint": "eslint .",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",

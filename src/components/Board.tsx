@@ -1,31 +1,41 @@
-import { calculateWinner } from "../utils/calculateWinner";
-import { Square } from "./Square";
+import React from 'react';
+import { calculateWinner } from '../utils/calculateWinner';
+import { Square } from './Square';
 
-export const  Board = ({ xIsNext, squares, onPlay }) => {
-  function handleClick(i) {
+interface Props {
+  xIsNext: boolean;
+  squares: Array<null | string>;
+  onPlay: (squares: Array<null | string>) => void;
+}
+
+export const Board: React.FC<Props> = ({ xIsNext, squares, onPlay }) => {
+  function handleClick(i: number) {
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
+
     const nextSquares = squares.slice();
+
     if (xIsNext) {
-      nextSquares[i] = "X";
+      nextSquares[i] = 'X';
     } else {
-      nextSquares[i] = "O";
+      nextSquares[i] = 'O';
     }
     onPlay(nextSquares);
   }
 
   const winner = calculateWinner(squares);
-  let status;
+  let currentStatus;
+
   if (winner) {
-    status = "Winner: " + winner;
+    currentStatus = 'Winner: ' + winner;
   } else {
-    status = "Next player: " + (xIsNext ? "X" : "O");
+    currentStatus = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
 
   return (
     <>
-      <div className="status">{status}</div>
+      <div className="status">{currentStatus}</div>
       <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
@@ -43,4 +53,4 @@ export const  Board = ({ xIsNext, squares, onPlay }) => {
       </div>
     </>
   );
-}
+};
