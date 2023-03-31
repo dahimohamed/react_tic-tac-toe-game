@@ -1,11 +1,12 @@
 import React from 'react';
+import { SquaresArray } from 'src/features/gameSlice';
 import { calculateWinner } from '../utils/calculateWinner';
 import { Square } from './Square';
 
 interface Props {
   xIsNext: boolean;
-  squares: Array<null | string>;
-  onPlay: (squares: Array<null | string>) => void;
+  squares: SquaresArray;
+  onPlay: (squares: any) => void;
 }
 
 export const Board: React.FC<Props> = ({ xIsNext, squares, onPlay }) => {

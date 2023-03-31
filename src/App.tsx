@@ -1,27 +1,26 @@
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { RootState } from './app/store';
 import { Board } from './components/Board';
+import { jumpTo, play, SquaresArray } from './features/gameSlice';
 
 export const App = () => {
-  const [histry, setHistory] = useState<Array<Array<string | null>>>([
-    Array(9).fill(null),
-  ]);
-  const [currentMove, setCurrentMove] = useState(0);
+  const dispatch = useAppDispatch();
+  const { history: histry, currentMove }
+    = useAppSelector((state: RootState) => state.game);
+
+  const squares: SquaresArray = histry[currentMove];
   const xIsNext = currentMove % 2 === 0;
-  const currentSquares = histry[currentMove];
 
-  function handlePlay(nextSquares: Array<string | null>) {
-    const nextHistory = [...histry.slice(0, currentMove + 1), nextSquares];
+  const handlePlay = (nextSquares: SquaresArray) => {
+    dispatch(play(nextSquares));
+  };
 
-    setHistory(nextHistory);
-    setCurrentMove(nextHistory.length - 1);
-  }
+  const handleJumpTo = (nextMove: number) => {
+    dispatch(jumpTo(nextMove));
+  };
 
-  function jumpTo(nextMove: number) {
-    setCurrentMove(nextMove);
-  }
-
-  const moves = histry.map((squares, move) => {
-    let description;
+  const moves = histry.map((squares1, move) => {
+    let description: string;
 
     if (move > 0) {
       description = 'Go to move #' + move;
@@ -31,7 +30,7 @@ export const App = () => {
 
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
+        <button onClick={() => handleJumpTo(move)}>{description}</button>
       </li>
     );
   });
@@ -39,7 +38,7 @@ export const App = () => {
   return (
     <div className="game">
       <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
+        <Board xIsNext={xIsNext} squares={squares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
         <ol>{moves}</ol>
